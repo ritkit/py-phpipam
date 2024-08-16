@@ -6,7 +6,7 @@
 from .backend import PhpipamBackend
 from .resources import PhpipamResource
 
-class PhpipamAPI:
+class phpipamapi:
     """
     phpIPAM API Implementation
 
@@ -20,7 +20,7 @@ class PhpipamAPI:
     https://phpipam.net/api-documentation/
     """
 
-    def __init__(self, api_url, app_id, api_user, api_password, verify=True):
+    def __init__(self, api_url, app_id, verify = True, timeout = 60, api_user: str = None, api_password: str = None, api_key: str = None):
         """
         Parameters
         ----------
@@ -36,7 +36,7 @@ class PhpipamAPI:
             verify API server SSL certificate
         """
 
-        self._backend = PhpipamBackend(api_url, app_id, api_user, api_password, verify)
+        self._backend = PhpipamBackend(api_url, app_id, verify, timeout, api_user, api_password, api_key)
 
     def __getattr__(self, item):
         return PhpipamResource(self._backend, item)

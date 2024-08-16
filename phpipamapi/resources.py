@@ -73,19 +73,10 @@ resource_types = {
     'prefix':{},
 }
 
-class InvalidResourceException(Exception):
-    pass
-
-class InvalidResourceOperationException(Exception):
-    pass
-
-class InvalidResourceOperationArgumentException(Exception):
-    pass
-
 class PhpipamResourceFunction:
     def __init__(self, backend, resource, function):
         if not function in resource_types[resource]:
-            raise InvalidResourceOperationException(f'Operation {function} is not defined for {resource}.')
+            raise NotImplementedError(f'Operation {function} is not defined for {resource}.')
 
         self._backend = backend
         self._resource = resource
@@ -100,13 +91,13 @@ class PhpipamResourceFunction:
         try:
             return self._backend.request( self._function['method'], self._function['request'].format(**kwargs), data=data )
         except KeyError as e:
-            raise InvalidResourceOperationArgumentException( f'{self._resource}.{self._name}: Missing arguments: {e.args}' )
+            raise AttributeError( f'{self._resource}.{self._name}: Missing arguments: {e.args}' )
 
 
 class PhpipamResource:
     def __init__(self, backend, resource):
         if not resource in resource_types:
-            raise InvalidResourceException(f'Invalid resource "{resource}"')
+            raise NotImplementedError(f'Invalid resource "{resource}"')
 
         self._type = resource
         self._backend = backend
