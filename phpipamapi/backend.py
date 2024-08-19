@@ -55,11 +55,7 @@ class PhpipamBackend:
         data = requests.get(self.api_url, headers={'token':self.api_token}, verify=self.verify,
                                 timeout=self.srv_timeout).json()
 
-        if not 'success' in data or not data['success']:
-            raise APIConnectionException("Query failed with code " + str(data['code']) + ": "
-                                    + str(data['message']))
-
-        elif data['code'] != 200:
+        if not 'success' in data or not data['success'] or data['code'] != 200:
             raise APIConnectionException("Query failed with code " + str(data['code']) + ": "
                                     + str(data['message']))
 

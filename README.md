@@ -1,24 +1,38 @@
 # phpipam-api
 
-An incomplete phpIPAM API implementation in python.
+## About
+A further addition to the incomplete phpIPAM API implementation in python.
 
+Can make a variety of calls out to PHP 
+
+### Attribution
+Thanks to Jonas Gunz and his initial [git project](https://github.com/kompetenzbolzen/python-phpipam).
+
+## Getting started
+Super easy drop this into folder anywhere, no need to install it. 
+Use `pip install -e <folder location>` to install it into whatever project that calls it.
+
+## Usage
 ```
-import phpipam_api
+import phpipamapi
 
-ipam = phpipam_api.PhpipamAPI("https://phpipam.example.com/", "myapp", "apiuser", "p4s5word")
-```
+ipam = phpipamapi.caller("https://phpipam.example.com/", "myapp", api_user="apiuser", api_password="p4s5word")
 
-Usage:
-
-```
 data = ipam.<controller>.<operation>(<arguments>)
+```
+
+A key can be defined in phpipam to be used for an API call instead. If you are going to use a key, replace the caller function with the following.
+
+```
+ipam = phpipamapi.caller("https://phpipam.example.com/", "myapp", 
+api_key="thisi$afakek3y")
 ```
 
 All functions return a dictionary object or a list of dictionary objects.
 Refer to the [API Doc](https://phpipam.net/api-documentation/) for data layout.
 If an error is encountered, an exception is raised.
 
-## Controllers
+### Controllers
 
 Functions shared by all controllers:
 
@@ -28,17 +42,17 @@ Functions shared by all controllers:
 * `edit(object_id=<object id>, data=<data>)`
 * `delete(object_id=<object id>)`
 
-### sections
+#### sections
 
 * `getSubnets(section_id=<section id>)`
 
-### subnets
+#### subnets
 
 * `search(search=<query>)` search for subnet by CIDR
 * `getIP(subnet_id=<subnet id>, ip=<ip>)` get address object from subnet by IP
 * `getAddresses(subnet_id=<subnet id>)` get all addresses in subnet
 
-### addresses
+#### addresses
 
 * `getByIP(subnet_id=<subnet id>, ip=<ip>)`
 * `getByTag(tag_id=<tag id>)`
@@ -48,23 +62,24 @@ Functions shared by all controllers:
 * `getTag(tag_id=<tag id>)`
 * `createFirstFree(subnet_id=<subnet id>)`
 
-### vlan
+#### vlan
 
-### l2domains
+#### l2domains
 
-### vrf
+#### vrf
 
-### devices
+#### devices
 
 * `getAddresses(device_id=<device id>)`
 * `getSubnets(device_id=<device id>)`
 
-### prefix
+#### prefix
 
 
-## requires
+## Requirements
 
 * `dateutil`
 * `requests`
 
-License: MIT
+## License
+Distributed under the MIT License. See `LICENSE.txt` for more information.

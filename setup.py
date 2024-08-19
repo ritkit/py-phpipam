@@ -2,13 +2,12 @@ from distutils.core import setup
 import setuptools
 
 setup(
-    name='phpipam-api',
-    version='1.1.0',
-    author="Jonas Gunz",
-    author_email="himself@jonasgunz.de",
-    url="https://github.com/kompetenzbolzen/python-phpipam",
+    name='phpipamapi',
+    version='1.1.2',
+    author="Christian Rahl",
+    author_email="contact@christianrahl.com",
     description="phpIPAM API implementation",
-    packages=['phpipam_api'],
+    packages=['phpipamapi'],
     install_requires=[
         "requests>=2.25.1",
         "python-dateutil>=2.8.1"

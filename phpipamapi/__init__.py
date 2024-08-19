@@ -6,7 +6,7 @@
 from .backend import PhpipamBackend
 from .resources import PhpipamResource
 
-class phpipamapi:
+class caller:
     """
     phpIPAM API Implementation
 
