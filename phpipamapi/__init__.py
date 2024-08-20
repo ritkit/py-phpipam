@@ -3,10 +3,10 @@
 # (c) 2021 Jonas Gunz <himself@jonasgunz.de>
 # License: MIT
 #
-from .backend import PhpipamBackend
-from .resources import PhpipamResource
+from .backend import PhpIpamBackend
+from .resources import PhpIpamResource
 
-class caller:
+class Caller:
     """
     phpIPAM API Implementation
 
@@ -36,7 +36,7 @@ class caller:
             verify API server SSL certificate
         """
 
-        self._backend = PhpipamBackend(api_url, app_id, verify, timeout, api_user, api_password, api_key)
+        self._backend = PhpIpamBackend(api_url, app_id, verify, timeout, api_user, api_password, api_key)
 
     def __getattr__(self, item):
-        return PhpipamResource(self._backend, item)
+        return PhpIpamResource(self._backend, item)

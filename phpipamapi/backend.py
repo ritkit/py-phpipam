@@ -17,7 +17,7 @@ class APIQueryException(ExceptionGroup):
 class APIObjectNotFoundException(ExceptionGroup):
     pass
 
-class PhpipamBackend:
+class PhpIpamBackend:
     def __init__(self, api_url, app_id, verify, timeout: int = 60, api_user: str = "", api_password: str = "", api_key: str = ""):
         self.api_url = api_url.strip('/') + '/api/' + app_id
         self.api_user = api_user

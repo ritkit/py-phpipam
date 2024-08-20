@@ -3,7 +3,7 @@
 # (c) 2021 Jonas Gunz <himself@jonasgunz.de>
 # License: MIT
 #
-from .backend import PhpipamBackend
+from .backend import PhpIpamBackend
 
 # Custom functions are defined here
 resource_types = {
@@ -73,7 +73,7 @@ resource_types = {
     'prefix':{},
 }
 
-class PhpipamResourceFunction:
+class PhpIpamResourceFunction:
     def __init__(self, backend, resource, function):
         if not function in resource_types[resource]:
             raise NotImplementedError(f'Operation {function} is not defined for {resource}.')
@@ -91,10 +91,10 @@ class PhpipamResourceFunction:
         try:
             return self._backend.request( self._function['method'], self._function['request'].format(**kwargs), data=data )
         except KeyError as e:
-            raise AttributeError( f'{self._resource}.{self._name}: Missing arguments: {e.args}' )
+            raise AttributeError( f"{self._resource}.{self._name}: Missing arguments: {e.args}" ) from e
 
 
-class PhpipamResource:
+class PhpIpamResource:
     def __init__(self, backend, resource):
         if not resource in resource_types:
             raise NotImplementedError(f'Invalid resource "{resource}"')
@@ -103,7 +103,7 @@ class PhpipamResource:
         self._backend = backend
 
     def __getattr__(self, attr):
-        return PhpipamResourceFunction(self._backend, self._type, attr)
+        return PhpIpamResourceFunction(self._backend, self._type, attr)
 
     # Functions every ObjectType shares
 
