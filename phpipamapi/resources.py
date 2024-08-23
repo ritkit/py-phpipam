@@ -5,73 +5,9 @@
 #
 from .backend import PhpIpamBackend
 
-# Custom functions are defined here
-resource_types = {
-    'sections' : {
-        'getSubnets':{
-            'method':'GET',
-            'request':'/sections/{section_id}/subnets',
-        }
-    },
-    'subnets' : {
-        'search':{
-            'method':'GET',
-            'request':'/subnets/search/{search}'
-        },
-        'getIP':{
-            'method':'GET',
-            'request':'/subnets/{subnet_id}/addresses/{ip}/'
-        },
-        'getAddresses':{
-            'method':'GET',
-            'request':'/subnets/{subnet_id}/addresses/'
-        },
-    },
-    'addresses' : {
-        'getByIP':{
-            'method':'GET',
-            'request':'/addresses/{ip}/{subnet_id}/'
-        },
-        'getByTag':{
-            'method':'GET',
-            'request':'/addresses/tags/{tag_id}/addresses/'
-        },
-        'search':{
-            'method':'GET',
-            'request':'/addresses/search/{ip}/'
-        },
-        'getFirstFree':{
-            'method':'GET',
-            'request':'/addresses/first_free/{subnet_id}/'
-        },
-        'getTags':{
-            'method':'GET',
-            'request':'/addresses/tags/'
-        },
-        'getTag':{
-            'method':'GET',
-            'request':'/addresses/tags/{tag_id}/'
-        },
-        'createFirstFree':{
-            'method':'POST',
-            'request':'/addresses/first_free/{subnet_id}/'
-        }
-    },
-    'vlan':{},
-    'l2domains':{},
-    'vrf':{},
-    'devices' : {
-        'getAddresses':{
-            'method':'GET',
-            'request':'/devices/{device_id}/addresses/'
-        },
-        'getSubnets':{
-            'method':'GET',
-            'request':'/devices/{device_id}/subnets/'
-        }
-    },
-    'prefix':{},
-}
+#Import the custome functions from resource_types
+from .resource_types import resource_types
+
 
 class PhpIpamResourceFunction:
     def __init__(self, backend, resource, function):
@@ -89,9 +25,11 @@ class PhpIpamResourceFunction:
         else:
             data = {}
         try:
-            return self._backend.request( self._function['method'], self._function['request'].format(**kwargs), data=data )
+            return self._backend.request( self._function['method'],
+                                         self._function['request'].format(**kwargs), data=data )
         except KeyError as e:
-            raise AttributeError( f"{self._resource}.{self._name}: Missing arguments: {e.args}" ) from e
+            raise AttributeError( f"{self._resource}.{self._name}: Missing arguments: {e.args}" ) \
+                                from e
 
 
 class PhpIpamResource:
